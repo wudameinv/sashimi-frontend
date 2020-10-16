@@ -3,7 +3,7 @@ name: Node CI
 on:
   push:
     branches:
-    - release
+    - sashimi-vault
   pull_request:
     branches:
       - "*"
@@ -21,31 +21,8 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: npm install -g yarn 
-    - run: mkdir sashimi-frontend
-    - run: yarn
-    - run: npm run pkg:online
+    - name: Invoke deployment hook
+      uses: distributhor/workflow-webhook@v1
       env:
-        CI: true
-    - run: cp build-online.tar.gz sashimi-frontend/
-    - run: cp build-online.tar.gz sashimi-frontend/build-online-`date +%Y-%m-%d-%H-%M`.tar.gz
-    - run: npm run pkg:online-test
-      env:
-        CI: true
-    - run: cp build-online-test.tar.gz sashimi-frontend/
-    - run: cp build-online-test.tar.gz sashimi-frontend/build-online-test-`date +%Y-%m-%d-%H-%M`.tar.gz
-    - run: npm run pkg:kovan
-      env:
-        CI: true
-    - run: cp build-kovan.tar.gz sashimi-frontend/
-    - run: cp build-kovan.tar.gz sashimi-frontend/build-kovan-`date +%Y-%m-%d-%H-%M`.tar.gz
-    - name: Upload to oss
-      id: upload_to_oss
-      uses: tvrcgo/upload-to-oss@v0.1.1
-      with:
-        key-id: ${{ secrets.OSS_KEY_ID }}
-        key-secret: ${{ secrets.OSS_KEY_SECRET }}
-        region: oss-ap-northeast-1
-        bucket: ${{ secrets.OSS_BUCKET }}
-        asset-path: ./sashimi-frontend
-        target-path: /
+        webhook_url: ${{ secrets.WEBHOOK_URL }}
+        webhook_secret: ${{ secrets.WEBHOOK_SECRET }}
