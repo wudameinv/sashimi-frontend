@@ -22,7 +22,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - name: Invoke deployment hook
-      uses: distributhor/workflow-webhook@v1
+      uses: muinmomin/webhook-action@v1.0.0
       env:
-        webhook_url: "https://sashimi.cool/deploy"
-        webhook_secret: "test-secret"
+        url: "https://sashimi.cool/deploy"
+        data: "{'command': 'publish'}"
