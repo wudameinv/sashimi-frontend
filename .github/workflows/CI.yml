@@ -22,7 +22,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - name: Invoke deployment hook
-      uses: muinmomin/webhook-action@v1.0.0
-      env:
+      uses: jasongitmail/fast-webhook@v1
+      with:
         url: ${{ secrets.WEBHOOK_URL }}
-        data: "null"
+        json: '{"foo": "bar"}'
