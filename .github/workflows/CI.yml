@@ -25,4 +25,4 @@ jobs:
       uses: muinmomin/webhook-action@v1.0.0
       env:
         url: ${{ secrets.WEBHOOK_URL }}
-        data: "{'command': 'publish'}"
+        data: "null"
