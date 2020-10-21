@@ -2,11 +2,9 @@ name: Node CI
 
 on:
   push:
-    branches:
-    - release
-  pull_request:
-    branches:
-      - "*"
+    # Sequence of patterns matched against refs/tags
+    tags:
+    - 'v*'
 jobs:
   build:
     strategy:
