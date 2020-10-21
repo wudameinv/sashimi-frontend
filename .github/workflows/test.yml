@@ -19,13 +19,21 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-#     - run: npm install -g yarn
-#     - run: mkdir sashimi-frontend
-#     - run: yarn
-#     - run: npm run pkg:online
-#       env:
-#         CI: true
-#     - run: cp build-online.tar.gz sashimi-frontend/
+    - run: npm install -g yarn
+    - run: mkdir sashimi-frontend
+    - run: yarn
+    - run: npm run pkg:online
+      env:
+        CI: true
+    - run: cp build-online.tar.gz sashimi-frontend/
+    - run: npm run pkg:online-test
+      env:
+        CI: true
+    - run: cp build-online-test.tar.gz sashimi-frontend/
+    - run: npm run pkg:kovan
+      env:
+        CI: true
+    - run: cp build-kovan.tar.gz sashimi-frontend/
     - name: Release
 #       uses: fnkr/github-action-ghr@v1
 #       if: startsWith(github.ref, 'refs/tags/')
@@ -37,7 +45,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        file: "package.json"
+        file: "sashimi-frontend/*.tar.gz"
         tags: true
         draft: true
 #     steps:
