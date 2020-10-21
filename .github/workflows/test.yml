@@ -20,12 +20,12 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm install -g yarn
-    - run: mkdir sashimi-frontend
-    - run: yarn
-    - run: npm run pkg:online
-      env:
-        CI: true
-    - run: cp build-online.tar.gz sashimi-frontend/
+#     - run: mkdir sashimi-frontend
+#     - run: yarn
+#     - run: npm run pkg:online
+#       env:
+#         CI: true
+#     - run: cp build-online.tar.gz sashimi-frontend/
 #     - run: npm run pkg:online-test
 #       env:
 #         CI: true
@@ -40,6 +40,6 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        asset_path: ./sashimi-frontend/build-online.tar.gz
-        asset_name: build-online.tar.gz
-        asset_content_type: application/gz
+        asset_path: ./package.json
+        asset_name: package.json
+        asset_content_type: application/json
