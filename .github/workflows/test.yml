@@ -19,20 +19,27 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: npm install -g yarn
-    - run: mkdir sashimi-frontend
-    - run: yarn
-    - run: npm run pkg:online
-      env:
-        CI: true
-    - run: cp build-online.tar.gz sashimi-frontend/
+#     - run: npm install -g yarn
+#     - run: mkdir sashimi-frontend
+#     - run: yarn
+#     - run: npm run pkg:online
+#       env:
+#         CI: true
+#     - run: cp build-online.tar.gz sashimi-frontend/
     - name: Release
-      uses: fnkr/github-action-ghr@v1
-      if: startsWith(github.ref, 'refs/tags/')
+#       uses: fnkr/github-action-ghr@v1
+#       if: startsWith(github.ref, 'refs/tags/')
+#       env:
+#         GHR_COMPRESS: gz
+#         GHR_PATH: ./sashimi-frontend/
+#         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      uses: xresloader/upload-to-github-release@v1
       env:
-        GHR_COMPRESS: gz
-        GHR_PATH: ./sashimi-frontend/
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        file: "package.json"
+        tags: true
+        draft: true
 #     steps:
 #     - uses: actions/checkout@v1
 #     - name: Use Node.js ${{ matrix.node-version }}
